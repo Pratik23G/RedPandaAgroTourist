@@ -1,0 +1,85 @@
+// Prisma schema — Red Panda Agro Tourist
+// NOTE: no live DATABASE_URL yet. Pages currently read from lib/data/packages.ts
+// (typed to match these models 1:1). Once a real Postgres URL is set in .env,
+// run `npm run db:migrate` then `npm run db:seed`, and swap lib/data/packages.ts
+// callers over to lib/data/packages-db.ts (Prisma-backed) — see that file's TODO.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PackageTier {
+  INTERNATIONAL
+  REGIONAL
+  LOCAL
+}
+
+enum Currency {
+  USD
+  NPR
+}
+
+model Package {
+  id              String         @id @default(cuid())
+  slug            String         @unique
+  tier            PackageTier
+  name            String
+  summary         String
+  durationLabel   String
+  priceAmount     Decimal?       @db.Decimal(10, 2)
+  priceCurrency   Currency
+  priceUnit       String // e.g. "per person", "per 6 persons", "per person / day"
+  priceConfirmed  Boolean        @default(true) // false = TBC, must not be advertised as final
+  guaranteeNoSighting Boolean    @default(false)
+  inclusions      String[]
+  heroImage       String
+  galleryImages   String[]
+  itineraryDays   ItineraryDay[]
+  featured        Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+}
+
+model ItineraryDay {
+  id          String  @id @default(cuid())
+  packageId   String
+  package     Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  dayNumber   Int
+  title       String
+  description String
+
+  @@unique([packageId, dayNumber])
+}
+
+model Testimonial {
+  id         String   @id @default(cuid())
+  authorName String
+  country    String
+  quote      String
+  rating     Int      @default(5)
+  featured   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+// Inquiry model is defined now (Phase 1 data model) but the write path
+// (form -> Zod -> DB + email) is Phase 3 — not wired in this pass.
+model Inquiry {
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  phone         String
+  country       String
+  packageSlug   String?
+  groupSize     Int
+  preferredDates String
+  message       String
+  createdAt     DateTime @default(now())
+
+  // Data minimization per brief §6.7: retention window enforced by a scheduled
+  // job (not built in this pass) that deletes rows older than 12 months.
+}

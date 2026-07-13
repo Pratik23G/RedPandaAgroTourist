@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream-200 text-forest-800 antialiased;
+  }
+  /* Non-negotiable per brief §5: no horizontal scroll at any width */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  /* Tap targets >=44px per brief §5 — apply to actual buttons/nav links, not inline text links */
+  .tap-target {
+    @apply inline-flex min-h-[44px] items-center justify-center;
+  }
+}
