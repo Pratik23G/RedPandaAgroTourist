@@ -4,6 +4,7 @@ import { getFeaturedPackages } from "@/lib/data/packages";
 import { testimonials } from "@/lib/data/testimonials";
 import { PackageCard } from "@/components/package-card";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
+import { PrayerFlags } from "@/components/prayer-flags";
 
 const USPS = [
   {
@@ -39,6 +40,7 @@ export default function HomePage() {
           className="object-cover opacity-70"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest-900 via-forest-900/40 to-forest-900/10" />
+        <PrayerFlags className="absolute inset-x-0 top-16 z-10 text-cream-50" />
         <div className="relative z-10 w-full px-4 pb-16 pt-32 sm:px-8 lg:px-16">
           <div className="max-w-2xl">
             <span className="eyebrow text-gold-400">

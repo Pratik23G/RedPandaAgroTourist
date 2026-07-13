@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { PackageData } from "@/lib/data/packages";
 import { formatPrice } from "@/lib/pricing";
+import { PawPrint } from "@/components/paw-print";
 
 export function PackageCard({ pkg }: { pkg: PackageData }) {
   return (
@@ -15,8 +16,9 @@ export function PackageCard({ pkg }: { pkg: PackageData }) {
           alt={pkg.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
+        <PawPrint className="animate-float pointer-events-none absolute bottom-3 right-3 h-7 w-7 text-cream-50/0 transition-colors duration-300 group-hover:text-cream-50/80" />
         {pkg.guaranteeNoSighting && (
           <span className="absolute left-0 top-3 bg-rust-500 py-1 pl-3 pr-4 text-xs font-semibold uppercase tracking-wide text-cream-50">
             No sighting = no charge
