@@ -49,4 +49,39 @@
     background-repeat: repeat-x;
     background-size: 2.25rem 1.75rem;
   }
+
+  .animate-flag-sway {
+    animation: flag-sway 2.6s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: gentle-float 3.5s ease-in-out infinite;
+  }
+}
+
+@keyframes flag-sway {
+  0%,
+  100% {
+    transform: rotate(-4deg) skewX(-3deg);
+  }
+  50% {
+    transform: rotate(4deg) skewX(3deg);
+  }
+}
+
+@keyframes gentle-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-flag-sway,
+  .animate-float {
+    animation: none;
+  }
 }
