@@ -7,12 +7,17 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-cream-200 text-forest-800 antialiased;
+    @apply bg-cream-100 text-forest-900 antialiased;
   }
   /* Non-negotiable per brief §5: no horizontal scroll at any width */
   html,
   body {
     overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tightest;
   }
 }
 
@@ -20,5 +25,28 @@
   /* Tap targets >=44px per brief §5 — apply to actual buttons/nav links, not inline text links */
   .tap-target {
     @apply inline-flex min-h-[44px] items-center justify-center;
+  }
+
+  /* Small-caps section label — signals "editorial" over "generic SaaS landing page" */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-sans text-xs font-semibold uppercase tracking-[0.2em] text-rust-600;
+  }
+
+  .btn-primary {
+    @apply tap-target rounded-sm bg-rust-500 px-7 font-semibold text-cream-50 transition-colors hover:bg-rust-600;
+  }
+
+  .btn-outline {
+    @apply tap-target rounded-sm border border-current px-7 font-semibold transition-colors;
+  }
+
+  /* Zigzag ridge motif (Singhalila skyline) between full-bleed sections. Color via `text-*`. */
+  .ridge-divider {
+    height: 1.75rem;
+    background-image: linear-gradient(135deg, currentColor 25%, transparent 25.5%),
+      linear-gradient(225deg, currentColor 25%, transparent 25.5%);
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    background-size: 2.25rem 1.75rem;
   }
 }

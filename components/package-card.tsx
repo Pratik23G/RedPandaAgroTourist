@@ -7,7 +7,7 @@ export function PackageCard({ pkg }: { pkg: PackageData }) {
   return (
     <Link
       href={`/packages/${pkg.slug}`}
-      className="group flex flex-col overflow-hidden rounded-lg border border-forest-700/10 bg-cream-50 shadow-sm transition-shadow hover:shadow-md"
+      className="group flex flex-col overflow-hidden rounded-sm bg-cream-50 transition-transform duration-200 hover:-translate-y-1"
     >
       <div className="relative aspect-[4/3] w-full bg-cream-100">
         <Image
@@ -18,17 +18,17 @@ export function PackageCard({ pkg }: { pkg: PackageData }) {
           className="object-cover"
         />
         {pkg.guaranteeNoSighting && (
-          <span className="absolute left-2 top-2 rounded-full bg-rust-500 px-3 py-1 text-xs font-semibold text-cream-50">
+          <span className="absolute left-0 top-3 bg-rust-500 py-1 pl-3 pr-4 text-xs font-semibold uppercase tracking-wide text-cream-50">
             No sighting = no charge
           </span>
         )}
       </div>
-      <div className="flex flex-1 flex-col gap-2 p-4">
-        <h3 className="font-display text-lg text-forest-800">{pkg.name}</h3>
+      <div className="flex flex-1 flex-col gap-2 border-t-2 border-forest-900 p-5">
+        <h3 className="font-display text-lg text-forest-900">{pkg.name}</h3>
         <p className="line-clamp-2 text-sm text-forest-700/80">{pkg.summary}</p>
-        <div className="mt-auto flex items-center justify-between pt-2">
+        <div className="mt-auto flex items-center justify-between pt-3">
           <span className="text-sm text-forest-700/70">{pkg.durationLabel}</span>
-          <span className="font-semibold text-rust-600">{formatPrice(pkg.price)}</span>
+          <span className="font-display text-lg font-semibold text-rust-600">{formatPrice(pkg.price)}</span>
         </div>
       </div>
     </Link>
