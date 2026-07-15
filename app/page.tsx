@@ -4,7 +4,7 @@ import { getFeaturedPackages } from "@/lib/data/packages";
 import { testimonials } from "@/lib/data/testimonials";
 import { PackageCard } from "@/components/package-card";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
-import { PrayerFlags } from "@/components/prayer-flags";
+import { AnimatedHero } from "@/components/animated-hero";
 
 const USPS = [
   {
@@ -30,40 +30,7 @@ export default function HomePage() {
 
   return (
     <>
-      <section className="relative flex min-h-[92vh] items-end overflow-hidden bg-forest-900 text-cream-50">
-        <Image
-          src="/placeholders/hero-home.svg"
-          alt="Red panda in the Singhalila forest canopy"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-70"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest-900 via-forest-900/40 to-forest-900/10" />
-        <PrayerFlags className="absolute inset-x-0 top-16 z-10 text-cream-50" />
-        <div className="relative z-10 w-full px-4 pb-16 pt-32 sm:px-8 lg:px-16">
-          <div className="max-w-2xl">
-            <span className="eyebrow text-gold-400">
-              <span aria-hidden className="h-px w-6 bg-gold-400" />
-              Tumling &middot; Singhalila &middot; Eastern Himalayas
-            </span>
-            <h1 className="mt-5 font-display text-5xl font-bold leading-[0.95] sm:text-6xl lg:text-7xl">
-              Track wild red pandas where the clouds live.
-            </h1>
-            <p className="mt-6 max-w-lg text-lg text-cream-100/85">
-              Guided tracking, bird watching, cultural village tours, and farm-family homestays — with
-              Kanchenjunga and Everest views along the way.
-            </p>
-            <div className="mt-9 flex flex-wrap items-center gap-4">
-              <Link href="/packages" className="btn-primary">
-                View Packages
-              </Link>
-              <WhatsAppCta />
-            </div>
-          </div>
-        </div>
-        <div className="ridge-divider absolute inset-x-0 bottom-0 z-10 text-cream-100" aria-hidden />
-      </section>
+      <AnimatedHero />
 
       <section className="bg-cream-100 py-6 text-center">
         <span className="tap-target inline-flex rounded-sm border border-rust-500 bg-rust-500/10 px-4 text-sm font-semibold text-rust-600">
@@ -88,6 +55,33 @@ export default function HomePage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-8">
+        <span className="eyebrow">
+          <span aria-hidden className="h-px w-6 bg-rust-500" />
+          Scenes from the trail
+        </span>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
+            <Image
+              src="/images/lakeylakes.jpeg"
+              alt="Alpine lake along the Singhalila ridge trail"
+              fill
+              sizes="(min-width: 640px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
+            <Image
+              src="/images/prayerFlag.jpeg"
+              alt="Prayer flags strung at a Himalayan viewpoint"
+              fill
+              sizes="(min-width: 640px) 50vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 
