@@ -12,7 +12,7 @@
   /* Non-negotiable per brief §5: no horizontal scroll at any width */
   html,
   body {
-    overflow-x: hidden;
+    overflow-x: clip; /* not hidden: hidden makes body a scroll container and breaks position: sticky */
   }
   h1,
   h2,

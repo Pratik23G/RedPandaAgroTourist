@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import type { PackageData } from "@/lib/data/packages";
 import { formatPrice } from "@/lib/pricing";
+import type { DisplayContext } from "@/lib/currency";
 import { PawPrint } from "@/components/paw-print";
 
-export function PackageCard({ pkg }: { pkg: PackageData }) {
+export function PackageCard({ pkg, display, recommended }: { pkg: PackageData; display: DisplayContext; recommended?: boolean }) {
+  const price = formatPrice(pkg.price, display);
   return (
     <Link
       href={`/packages/${pkg.slug}`}
@@ -19,6 +21,11 @@ export function PackageCard({ pkg }: { pkg: PackageData }) {
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <PawPrint className="animate-float pointer-events-none absolute bottom-3 right-3 h-7 w-7 text-cream-50/0 transition-colors duration-300 group-hover:text-cream-50/80" />
+        {recommended && (
+          <span className="absolute right-0 top-3 bg-forest-900 py-1 pl-4 pr-3 text-xs font-semibold uppercase tracking-wide text-gold-400">
+            Fits you
+          </span>
+        )}
         {pkg.guaranteeNoSighting && (
           <span className="absolute left-0 top-3 bg-rust-500 py-1 pl-3 pr-4 text-xs font-semibold uppercase tracking-wide text-cream-50">
             No sighting = no charge
@@ -30,7 +37,10 @@ export function PackageCard({ pkg }: { pkg: PackageData }) {
         <p className="line-clamp-2 text-sm text-forest-700/80">{pkg.summary}</p>
         <div className="mt-auto flex items-center justify-between pt-3">
           <span className="text-sm text-forest-700/70">{pkg.durationLabel}</span>
-          <span className="font-display text-lg font-semibold text-rust-600">{formatPrice(pkg.price)}</span>
+          <span className="text-right">
+            <span className="block font-display text-lg font-semibold leading-tight text-rust-600">{price.main}</span>
+            {price.note && <span className="block text-xs text-forest-700/60">{price.note}</span>}
+          </span>
         </div>
       </div>
     </Link>

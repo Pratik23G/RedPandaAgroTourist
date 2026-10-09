@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPackageBySlug, packages } from "@/lib/data/packages";
 import { formatPrice } from "@/lib/pricing";
+import { getDisplayContext } from "@/lib/display-currency";
 import { ItineraryTimeline } from "@/components/itinerary-timeline";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
 import { PrayerFlags } from "@/components/prayer-flags";
@@ -35,6 +36,7 @@ export default async function PackageDetailPage({
   const { slug } = await params;
   const pkg = getPackageBySlug(slug);
   if (!pkg) notFound();
+  const price = formatPrice(pkg.price, await getDisplayContext());
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -84,7 +86,8 @@ export default async function PackageDetailPage({
           </div>
           <div>
             <div className="eyebrow">Price</div>
-            <div className="mt-1 font-display text-lg text-rust-600">{formatPrice(pkg.price)}</div>
+            <div className="mt-1 font-display text-lg text-rust-600">{price.main}</div>
+            {price.note && <div className="text-xs text-forest-700/60">{price.note}</div>}
           </div>
           <Link href={`/book/${pkg.slug}`} className="btn-primary ml-auto">
             Book Inquiry

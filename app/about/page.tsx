@@ -21,7 +21,7 @@ export default function AboutPage() {
 
       <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden rounded-lg bg-cream-100">
         <Image
-          src="/placeholders/gallery-village.svg"
+          src="/images/photos/village-terraces.jpg"
           alt="Local village and farmland in the Tumling / Singhalila region"
           fill
           sizes="(max-width: 900px) 100vw, 900px"

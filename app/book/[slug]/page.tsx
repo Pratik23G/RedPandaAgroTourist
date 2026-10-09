@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPackageBySlug, packages } from "@/lib/data/packages";
-import { formatPrice } from "@/lib/pricing";
+import { formatPriceInline } from "@/lib/pricing";
+import { getDisplayContext } from "@/lib/display-currency";
 import { InquiryForm } from "@/components/inquiry-form";
 
 export function generateStaticParams() {
@@ -32,7 +33,7 @@ export default async function BookPackagePage({
     <div className="mx-auto max-w-2xl px-4 py-12">
       <h1 className="font-display text-3xl font-bold text-forest-800">Book: {pkg.name}</h1>
       <p className="mt-2 text-forest-700/80">
-        {pkg.durationLabel} · {formatPrice(pkg.price)}
+        {pkg.durationLabel} · {formatPriceInline(pkg.price, await getDisplayContext())}
       </p>
       <div className="mt-8">
         <InquiryForm packageSlug={pkg.slug} />

@@ -51,6 +51,15 @@ export function InquiryForm({ packageSlug }: { packageSlug?: string }) {
       result.data.message ? `Message: ${result.data.message}` : undefined,
     ].filter(Boolean);
 
+    // Save for the admin inbox (fire-and-forget: WhatsApp relay below must open synchronously
+    // or mobile Safari blocks the popup, and a DB hiccup must never block the customer).
+    void fetch("/api/inquiries", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...result.data, website: formData.get("website") }),
+      keepalive: true,
+    }).catch(() => {});
+
     const phone = OFFICES[office].phone;
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(lines.join("\n"))}`;
     window.open(url, "_blank", "noopener,noreferrer");
@@ -58,6 +67,9 @@ export function InquiryForm({ packageSlug }: { packageSlug?: string }) {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-4">
+      {/* honeypot: hidden from humans, bots fill it */}
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden className="hidden" />
+
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-forest-800">
           Full name
@@ -149,7 +161,7 @@ export function InquiryForm({ packageSlug }: { packageSlug?: string }) {
         Send Inquiry via WhatsApp
       </button>
       <p className="text-xs text-forest-700/60">
-        We&apos;ll open WhatsApp with your details pre-filled — nothing is stored on our server yet in this version.
+        We&apos;ll open WhatsApp with your details pre-filled, and keep a copy so our team can follow up with your invoice and payment options.
       </p>
     </form>
   );

@@ -39,7 +39,7 @@ export function AnimatedHero() {
             Guided tracking, bird watching, cultural village tours, and farm-family homestays — with
             Kanchenjunga and Everest views along the way.
           </p>
-          <div className="mt-9 flex flex-wrap items-center gap-4">
+          <div className="mt-9 flex flex-wrap items-center gap-4" data-wa-label="hero">
             <Link href="/packages" className="btn-primary">
               View Packages
             </Link>

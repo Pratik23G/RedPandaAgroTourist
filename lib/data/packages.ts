@@ -9,6 +9,8 @@
  * present them as final; the UI must show a "confirm with owner" badge instead.
  */
 
+import { photos } from "@/lib/data/photos";
+
 export type PackageTier = "INTERNATIONAL" | "REGIONAL" | "LOCAL";
 export type Currency = "USD" | "NPR";
 
@@ -61,12 +63,8 @@ export const packages: PackageData[] = [
       "Food, accommodation & snacks",
       "Guide and all transportation",
     ],
-    heroImage: "/placeholders/hero-international.svg",
-    galleryImages: [
-      "/placeholders/gallery-red-panda-1.svg",
-      "/placeholders/gallery-tea-estate.svg",
-      "/placeholders/gallery-village.svg",
-    ],
+    heroImage: photos["kanchenjunga-tumling"].src,
+    galleryImages: [photos["red-panda-langtang"].src, photos["ilam-tea"].src, photos["swayambhu"].src, photos["everest"].src],
     itineraryDays: [
       { dayNumber: 1, title: "Arrival & Ilam Tea Estate", description: "Fly KTM–Bhadrapur, airport pickup, transfer to Ilam for tea-estate stay and sightseeing." },
       { dayNumber: 2, title: "Ilam to Tumling", description: "Scenic transfer to Tumling, orientation, and welcome dinner with the local host family." },
@@ -95,12 +93,8 @@ export const packages: PackageData[] = [
       "Food, accommodation & snacks",
       "Guide and all transportation",
     ],
-    heroImage: "/placeholders/hero-regional.svg",
-    galleryImages: [
-      "/placeholders/gallery-red-panda-1.svg",
-      "/placeholders/gallery-tea-estate.svg",
-      "/placeholders/gallery-village.svg",
-    ],
+    heroImage: photos["tumling-trail"].src,
+    galleryImages: [photos["red-panda-cub"].src, photos["ilam-hills"].src, photos["singalila-forest"].src],
     itineraryDays: [
       { dayNumber: 1, title: "Arrival & Ilam Tea Estate", description: "Fly KTM–Bhadrapur, airport pickup, transfer to Ilam for tea-estate stay and sightseeing." },
       { dayNumber: 2, title: "Ilam to Tumling", description: "Scenic transfer to Tumling, orientation, and welcome dinner with the local host family." },
@@ -127,8 +121,8 @@ export const packages: PackageData[] = [
     },
     guaranteeNoSighting: true,
     inclusions: ["Land Rover transportation", "Guide", "2–3 days red panda & bird watching"],
-    heroImage: "/placeholders/hero-local.svg",
-    galleryImages: ["/placeholders/gallery-red-panda-1.svg", "/placeholders/gallery-landrover.svg"],
+    heroImage: photos["red-panda-portrait"].src,
+    galleryImages: [photos["red-panda-tree"].src, photos["red-panda-cub"].src, photos["landrover-singalila"].src, photos["owl"].src],
     itineraryDays: [
       { dayNumber: 1, title: "Arrival & First Tracking", description: "Land Rover transfer into the park, first red panda and bird watching session." },
       { dayNumber: 2, title: "Full-Day Tracking", description: "Extended tracking and birding across additional habitat zones." },
@@ -145,8 +139,8 @@ export const packages: PackageData[] = [
     price: { amount: 1200, currency: "NPR", unit: "per person", confirmed: true },
     guaranteeNoSighting: false,
     inclusions: ["Tent", "Dinner", "Breakfast", "Jungle camping experience"],
-    heroImage: "/placeholders/hero-camping.svg",
-    galleryImages: ["/placeholders/gallery-camping.svg"],
+    heroImage: photos["camping"].src,
+    galleryImages: [photos["singalila-forest"].src, photos["rhododendron"].src],
     itineraryDays: [
       { dayNumber: 1, title: "Camp Setup & Barbecue", description: "Arrive, set up jungle camp near the cowsheds, evening barbecue dinner under the stars." },
     ],
@@ -161,8 +155,8 @@ export const packages: PackageData[] = [
     price: { amount: 1000, currency: "NPR", unit: "per person / day", confirmed: true },
     guaranteeNoSighting: false,
     inclusions: ["Farmer homestay lodging", "Organic food", "Hands-on agriculture activities", "Cultural exchange"],
-    heroImage: "/placeholders/hero-agro.svg",
-    galleryImages: ["/placeholders/gallery-village.svg"],
+    heroImage: photos["village-terraces"].src,
+    galleryImages: [photos["village-life"].src, photos["ilam-tea"].src],
     itineraryDays: [
       { dayNumber: 1, title: "Farm Life Immersion", description: "Join daily farm chores, share organic meals, and exchange stories with the host family." },
     ],
@@ -185,8 +179,8 @@ export const packages: PackageData[] = [
       "Gufadada (rolling clouds, spongy grass walk)",
       "Tumling Fatak (Kanchenjunga + Everest view)",
     ],
-    heroImage: "/placeholders/hero-sightseeing.svg",
-    galleryImages: ["/placeholders/gallery-landrover.svg", "/placeholders/gallery-mountain.svg"],
+    heroImage: photos["landrover-singalila"].src,
+    galleryImages: [photos["landrover-singalila-2"].src, photos["kanchenjunga-tumling"].src, photos["kala-pokhri"].src, photos["sandakphu-village"].src],
     itineraryDays: [
       { dayNumber: 1, title: "Full-Day Sightseeing Loop", description: "Land Rover circuit through Tumling Ram Mandir, Singhalila National Park, Gurashe Sherpa monastery, Devi Cave, Gufadada, and Tumling Fatak." },
     ],
@@ -212,8 +206,8 @@ export const packages: PackageData[] = [
       "Tonglu Lake",
       "Jaubari heritage village (agricultural farming, Nepal)",
     ],
-    heroImage: "/placeholders/hero-sightseeing.svg",
-    galleryImages: ["/placeholders/gallery-mountain.svg", "/placeholders/gallery-village.svg"],
+    heroImage: photos["sandakphu-village"].src,
+    galleryImages: [photos["kala-pokhri"].src, photos["rhododendron"].src, photos["kanchenjunga-sandakphu"].src],
     itineraryDays: [
       { dayNumber: 1, title: "Extended Sightseeing Loop", description: "Full Tumling Sightseeing route plus Meghma Monastery, Tonglu Lake, and Jaubari heritage village." },
     ],

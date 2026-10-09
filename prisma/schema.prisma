@@ -66,20 +66,141 @@ model Testimonial {
   createdAt  DateTime @default(now())
 }
 
-// Inquiry model is defined now (Phase 1 data model) but the write path
-// (form -> Zod -> DB + email) is Phase 3 — not wired in this pass.
+enum InquiryStatus {
+  NEW // just arrived
+  CONTACTED // a real conversation has started (counts as a lead)
+  INVOICED
+  LOST // went cold / chose someone else
+  CLOSED // handled, no further action
+}
+
+enum InquirySource {
+  FORM // website inquiry form
+  WHATSAPP // lead added by admin from a WhatsApp chat
+  PHONE
+  OTHER
+}
+
+enum EventType {
+  PAGE_VIEW
+  WHATSAPP_CLICK
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PARTIALLY_PAID
+  PAID
+  VOID
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER // Nepal bank wire / SWIFT / Wise etc.
+  WHATSAPP // arranged & confirmed over WhatsApp (e.g. wallet, cash handover)
+  ESEWA
+  KHALTI
+  CASH
+  OTHER
+}
+
+enum PaymentStatus {
+  PENDING // customer says they paid; owner has not verified it landed
+  CONFIRMED // owner verified the money arrived
+  REJECTED
+}
+
+enum EmailDirection {
+  OUTBOUND
+  INBOUND // logged manually by admin (e.g. customer's bank-slip email)
+}
+
+enum EmailStatus {
+  SENT
+  FAILED
+  SKIPPED // no RESEND_API_KEY configured; body kept so admin can send by hand
+  LOGGED // inbound, recorded by admin
+}
+
 model Inquiry {
-  id            String   @id @default(cuid())
-  name          String
-  email         String
-  phone         String
-  country       String
-  packageSlug   String?
-  groupSize     Int
+  id             String        @id @default(cuid())
+  name           String
+  contact        String // phone/WhatsApp or email, exactly as entered
+  country        String
+  packageSlug    String?
+  groupSize      Int
   preferredDates String
-  message       String
-  createdAt     DateTime @default(now())
+  message        String?
+  status         InquiryStatus @default(NEW)
+  source         InquirySource @default(FORM)
+  createdAt      DateTime      @default(now())
+  invoices       Invoice[]
+
+  @@index([createdAt])
 
   // Data minimization per brief §6.7: retention window enforced by a scheduled
-  // job (not built in this pass) that deletes rows older than 12 months.
+  // job (not built yet) that deletes rows older than 12 months.
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  number        String        @unique // RP-2026-0001
+  publicToken   String        @unique @default(cuid()) // unguessable id used in the customer's /pay link
+  inquiryId     String?
+  inquiry       Inquiry?      @relation(fields: [inquiryId], references: [id], onDelete: SetNull)
+  customerName  String
+  customerEmail String?
+  customerPhone String?
+  description   String
+  amount        Decimal       @db.Decimal(10, 2)
+  currency      Currency
+  status        InvoiceStatus @default(DRAFT)
+  dueDate       DateTime?
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  payments      Payment[]
+  emails        EmailLog[]
+}
+
+model Payment {
+  id         String        @id @default(cuid())
+  invoiceId  String
+  invoice    Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  amount     Decimal       @db.Decimal(10, 2)
+  currency   Currency
+  method     PaymentMethod
+  reference  String? // bank txn ref / WhatsApp note / eSewa id
+  payerNote  String?
+  status     PaymentStatus @default(PENDING)
+  receivedAt DateTime      @default(now())
+  confirmedAt DateTime?
+}
+
+model EmailLog {
+  id        String         @id @default(cuid())
+  invoiceId String?
+  invoice   Invoice?       @relation(fields: [invoiceId], references: [id], onDelete: SetNull)
+  direction EmailDirection
+  toAddress String
+  subject   String
+  body      String
+  status    EmailStatus
+  error     String?
+  createdAt DateTime       @default(now())
+}
+
+// Anonymous, first-party analytics. No IP, no user agent, no PII — visitorId is a random id
+// in a first-party cookie. Powers the visitors -> WhatsApp -> inquiry -> lead -> booking funnel.
+model TrackingEvent {
+  id          String    @id @default(cuid())
+  visitorId   String
+  type        EventType
+  path        String
+  packageSlug String?
+  label       String? // which button, e.g. "hero", "floating", "package-page"
+  origin      String? // nepal | saarc | other (from the visitor-origin cookie)
+  createdAt   DateTime  @default(now())
+
+  @@index([type, createdAt])
+  @@index([visitorId])
 }
