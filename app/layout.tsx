@@ -3,6 +3,7 @@ import { Fraunces, Inter, Noto_Sans_Devanagari } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { WhatsAppFloatingButton } from "@/components/whatsapp-floating-button";
+import { AnalyticsTracker } from "@/components/analytics-tracker";
 import "./globals.css";
 
 const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-display", display: "swap" });
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable} ${notoDevanagari.variable}`}>
       <body className="flex min-h-screen flex-col font-sans">
+        <AnalyticsTracker />
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />

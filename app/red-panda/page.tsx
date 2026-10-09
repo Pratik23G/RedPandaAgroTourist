@@ -20,7 +20,7 @@ export default function RedPandaPage() {
 
       <div className="relative mt-6 aspect-[16/9] w-full overflow-hidden rounded-lg bg-cream-100">
         <Image
-          src="/placeholders/gallery-red-panda-1.svg"
+          src="/images/photos/red-panda-portrait.jpg"
           alt="Red panda in Singhalila forest habitat"
           fill
           sizes="(max-width: 900px) 100vw, 900px"

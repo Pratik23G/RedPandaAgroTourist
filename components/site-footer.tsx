@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { OFFICES } from "@/components/whatsapp-cta";
 
@@ -7,7 +8,8 @@ export function SiteFooter() {
       <div className="ridge-divider text-cream-100" aria-hidden />
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-3 sm:px-8">
         <div>
-          <h2 className="font-display text-lg font-bold text-cream-50">Red Panda Agro Tourist</h2>
+          <Image src="/images/logo.png" alt="Red Panda Agro Tourist Tours & Travel Pvt. Ltd. logo" width={96} height={96} className="h-24 w-24" />
+          <h2 className="mt-3 font-display text-lg font-bold text-cream-50">Red Panda Agro Tourist</h2>
           <p className="mt-2 text-sm text-cream-100/70">
             Eco- and agro-tourism in the Tumling / Singhalila region, Eastern Himalayas.
           </p>

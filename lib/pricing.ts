@@ -1,7 +1,8 @@
 import type { PackagePrice, PackageTier } from "@/lib/data/packages";
 import type { VisitorOrigin } from "@/lib/origin-cookie";
+import { convert, formatCurrency, niceRound, type DisplayContext } from "@/lib/currency";
 
-/** Brief §4.2: origin selector drives which tier of packages is shown/prioritized. */
+/** Which package tier is the "natural fit" for a visitor — used only to sort/badge, never to hide tours. */
 export function originToDefaultTier(origin: VisitorOrigin): PackageTier {
   switch (origin) {
     case "nepal":
@@ -13,13 +14,26 @@ export function originToDefaultTier(origin: VisitorOrigin): PackageTier {
   }
 }
 
-const CURRENCY_FORMATTERS: Record<PackagePrice["currency"], Intl.NumberFormat> = {
-  USD: new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }),
-  NPR: new Intl.NumberFormat("en-IN", { style: "currency", currency: "NPR", maximumFractionDigits: 0 }),
-};
+export interface PriceDisplay {
+  /** Headline, e.g. "$22 per 6 persons" */
+  main: string;
+  /** Small print, e.g. "NPR 3,000 base price" — present only when converted. */
+  note?: string;
+}
 
-export function formatPrice(price: PackagePrice): string {
-  if (price.displayOverride) return price.displayOverride;
-  if (price.amount == null || !price.confirmed) return "Price TBC — confirm with owner";
-  return `${CURRENCY_FORMATTERS[price.currency].format(price.amount)} ${price.unit}`;
+export function formatPrice(price: PackagePrice, ctx: DisplayContext): PriceDisplay {
+  if (price.displayOverride) return { main: price.displayOverride };
+  if (price.amount == null || !price.confirmed) return { main: "Price TBC — confirm with owner" };
+
+  const base = formatCurrency(price.amount, price.currency);
+  if (price.currency === ctx.currency) return { main: `${base} ${price.unit}` };
+
+  const converted = niceRound(convert(price.amount, price.currency, ctx.currency, ctx.snapshot.rates));
+  return { main: `≈ ${formatCurrency(converted, ctx.currency)} ${price.unit}`, note: `${base} base price` };
+}
+
+/** Compact string for places that can't render two lines (e.g. book page subtitle). */
+export function formatPriceInline(price: PackagePrice, ctx: DisplayContext): string {
+  const p = formatPrice(price, ctx);
+  return p.note ? `${p.main} (${p.note})` : p.main;
 }

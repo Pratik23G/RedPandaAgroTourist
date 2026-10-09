@@ -1,10 +1,12 @@
-import Image from "next/image";
 import Link from "next/link";
 import { getFeaturedPackages } from "@/lib/data/packages";
 import { testimonials } from "@/lib/data/testimonials";
+import { getDisplayContext } from "@/lib/display-currency";
 import { PackageCard } from "@/components/package-card";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
 import { AnimatedHero } from "@/components/animated-hero";
+import { PandaParallax, HorizontalScenes } from "@/components/scroll-showcase";
+import { Reveal } from "@/components/reveal";
 
 const USPS = [
   {
@@ -25,8 +27,9 @@ const USPS = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
   const featured = getFeaturedPackages();
+  const display = await getDisplayContext();
 
   return (
     <>
@@ -45,7 +48,7 @@ export default function HomePage() {
         </span>
         <div className="mt-8 grid gap-x-8 gap-y-10 sm:grid-cols-2">
           {USPS.map((usp, i) => (
-            <div key={usp.title} className="flex gap-5 border-t border-forest-700/15 pt-5">
+            <Reveal key={usp.title} delay={i * 90} className="flex gap-5 border-t border-forest-700/15 pt-5">
               <span className="font-display text-3xl text-cream-200/80" aria-hidden>
                 {String(i + 1).padStart(2, "0")}
               </span>
@@ -53,37 +56,14 @@ export default function HomePage() {
                 <h3 className="font-display text-xl text-forest-900">{usp.title}</h3>
                 <p className="mt-2 text-forest-700/80">{usp.description}</p>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 pb-20 sm:px-8">
-        <span className="eyebrow">
-          <span aria-hidden className="h-px w-6 bg-rust-500" />
-          Scenes from the trail
-        </span>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
-            <Image
-              src="/images/lakeylakes.jpeg"
-              alt="Alpine lake along the Singhalila ridge trail"
-              fill
-              sizes="(min-width: 640px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
-            <Image
-              src="/images/prayerFlag.jpeg"
-              alt="Prayer flags strung at a Himalayan viewpoint"
-              fill
-              sizes="(min-width: 640px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-        </div>
-      </section>
+      <PandaParallax />
+
+      <HorizontalScenes />
 
       <section className="bg-forest-900 py-20 text-cream-50">
         <div className="mx-auto max-w-6xl px-4 sm:px-8">
@@ -101,7 +81,7 @@ export default function HomePage() {
           </div>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((pkg) => (
-              <PackageCard key={pkg.slug} pkg={pkg} />
+              <PackageCard key={pkg.slug} pkg={pkg} display={display} />
             ))}
           </div>
         </div>
@@ -130,7 +110,7 @@ export default function HomePage() {
           <p className="mt-3 text-cream-50/90">
             Send an inquiry and our team will confirm your dates within one business day.
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4" data-wa-label="home-cta">
             <Link href="/contact" className="btn-primary bg-forest-900 hover:bg-forest-800">
               Send an Inquiry
             </Link>
