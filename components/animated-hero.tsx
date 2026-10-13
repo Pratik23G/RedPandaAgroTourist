@@ -5,7 +5,7 @@ import { PrayerFlags } from "@/components/prayer-flags";
 
 export function AnimatedHero() {
   return (
-    <section className="relative min-h-[70vh] overflow-hidden bg-forest-900 text-cream-50 sm:min-h-[85vh]">
+    <section className="relative min-h-[70svh] overflow-hidden bg-forest-900 text-cream-50 sm:min-h-[85svh]">
       <Image
         src="/images/tumling-road.jpg"
         alt="The winding road up to the misty hillside village at Tumling"
@@ -26,16 +26,16 @@ export function AnimatedHero() {
 
       <PrayerFlags className="absolute inset-x-0 top-16 z-10 text-cream-50" />
 
-      <div className="relative z-10 flex min-h-[70vh] w-full items-end px-4 pb-16 pt-32 sm:min-h-[85vh] sm:px-8 lg:px-16">
+      <div className="relative z-10 flex min-h-[70svh] w-full items-end px-4 pb-20 pt-28 sm:min-h-[85svh] sm:px-8 lg:px-16">
         <div className="max-w-2xl">
           <span className="eyebrow text-gold-400">
             <span aria-hidden className="h-px w-6 bg-gold-400" />
             Tumling &middot; Singhalila &middot; Eastern Himalayas
           </span>
-          <h1 className="mt-5 font-display text-5xl font-bold leading-[0.95] sm:text-6xl lg:text-7xl">
+          <h1 className="mt-5 font-display text-4xl font-bold leading-[1] min-[400px]:text-5xl sm:text-6xl lg:text-7xl">
             Track wild red pandas where the clouds live.
           </h1>
-          <p className="mt-6 max-w-lg text-lg text-cream-100/85">
+          <p className="mt-6 max-w-lg text-base text-cream-100/85 sm:text-lg">
             Guided tracking, bird watching, cultural village tours, and farm-family homestays — with
             Kanchenjunga and Everest views along the way.
           </p>
