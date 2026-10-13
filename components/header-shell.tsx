@@ -29,7 +29,7 @@ export function HeaderShell({ children }: { children: React.ReactNode }) {
   return (
     <header
       className={`sticky top-0 z-40 border-b border-forest-900/10 bg-cream-50/95 backdrop-blur transition-transform duration-300 motion-reduce:transition-none ${
-        hidden ? "max-xl:-translate-y-full" : ""
+        hidden ? "max-md:-translate-y-full" : ""
       }`}
     >
       {children}
