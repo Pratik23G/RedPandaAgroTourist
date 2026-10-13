@@ -10,7 +10,7 @@ export function CurrencySelector({ current, stacked = false }: { current: Displa
   const router = useRouter();
   return (
     <label className={stacked ? "flex flex-col gap-1 text-sm" : "flex items-center gap-2 text-sm"}>
-      <span className="whitespace-nowrap text-forest-700">Prices in:</span>
+      <span className={stacked ? "text-forest-700" : "hidden whitespace-nowrap text-forest-700 2xl:inline"}>Prices in:</span>
       <select
         defaultValue={current}
         disabled={pending}

@@ -30,10 +30,10 @@ export default async function PayPage({ params }: { params: Promise<{ token: str
       <h1 className="mt-2 font-display text-3xl font-bold text-forest-800">{invoice.description}</h1>
       <p className="mt-1 text-forest-700/80">Prepared for {invoice.customerName} · issued {formatDate(invoice.createdAt)}</p>
 
-      <dl className="mt-8 grid grid-cols-3 gap-4 border-y border-forest-700/15 py-5 text-center">
-        <div><dt className="text-xs uppercase tracking-wider text-forest-700/60">Total</dt><dd className="mt-1 font-display text-xl">{formatMoney(total, invoice.currency)}</dd></div>
-        <div><dt className="text-xs uppercase tracking-wider text-forest-700/60">Received</dt><dd className="mt-1 font-display text-xl">{formatMoney(paid, invoice.currency)}</dd></div>
-        <div><dt className="text-xs uppercase tracking-wider text-forest-700/60">Balance</dt><dd className="mt-1 font-display text-xl text-rust-600">{formatMoney(balance, invoice.currency)}</dd></div>
+      <dl className="mt-8 grid gap-3 border-y border-forest-700/15 py-5 sm:grid-cols-3 sm:gap-4 sm:text-center">
+        <div className="flex items-baseline justify-between gap-3 sm:block"><dt className="text-xs uppercase tracking-wider text-forest-700/80">Total</dt><dd className="font-display text-xl sm:mt-1">{formatMoney(total, invoice.currency)}</dd></div>
+        <div className="flex items-baseline justify-between gap-3 sm:block"><dt className="text-xs uppercase tracking-wider text-forest-700/80">Received</dt><dd className="font-display text-xl sm:mt-1">{formatMoney(paid, invoice.currency)}</dd></div>
+        <div className="flex items-baseline justify-between gap-3 sm:block"><dt className="text-xs uppercase tracking-wider text-forest-700/80">Balance</dt><dd className="font-display text-xl text-rust-600 sm:mt-1">{formatMoney(balance, invoice.currency)}</dd></div>
       </dl>
 
       {invoice.status === "PAID" && <p className="mt-6 rounded-lg bg-forest-600/10 p-4 text-forest-800">Paid in full — thank you! See you in the hills.</p>}
@@ -48,7 +48,7 @@ export default async function PayPage({ params }: { params: Promise<{ token: str
             {hasBankDetails(bank) ? (
               <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
                 {([["Bank", bank.bankName], ["Account name", bank.accountName], ["Account number", bank.accountNumber], ["Branch", bank.branch], ["SWIFT / BIC", bank.swift]] as const).map(
-                  ([k, v]) => v && (<div key={k} className="contents"><dt className="text-forest-700/70">{k}</dt><dd className="font-mono">{v}</dd></div>),
+                  ([k, v]) => v && (<div key={k} className="contents"><dt className="text-forest-700/85">{k}</dt><dd className="min-w-0 break-all font-mono">{v}</dd></div>),
                 )}
               </dl>
             ) : (
@@ -64,7 +64,7 @@ export default async function PayPage({ params }: { params: Promise<{ token: str
           <section className="mt-4 rounded-lg border border-forest-700/20 bg-white p-5">
             <h3 className="font-semibold text-forest-800">Option 2 — Arrange payment on WhatsApp</h3>
             <p className="mt-2 text-sm text-forest-700/80">Prefer to pay another way, or have a question? Chat with us and we&apos;ll sort it out.</p>
-            <a href={waHref} target="_blank" rel="noopener noreferrer" className="btn-primary mt-3 bg-forest-700 hover:bg-forest-600">Message us on WhatsApp</a>
+            <a href={waHref} target="_blank" rel="noopener noreferrer" className="btn-primary mt-3 w-full bg-forest-700 hover:bg-forest-600 sm:w-auto">Message us on WhatsApp</a>
           </section>
 
           {pending.length > 0 && (

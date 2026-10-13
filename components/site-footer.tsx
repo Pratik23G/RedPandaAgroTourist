@@ -17,8 +17,8 @@ export function SiteFooter() {
         <div>
           <h3 className="font-semibold text-cream-50">Offices</h3>
           <ul className="mt-2 space-y-1 text-sm text-cream-100/80">
-            <li>{OFFICES.tumling.label}: +91 7063727464</li>
-            <li>{OFFICES.kathmandu.label}: +977 9823808506</li>
+            <li>{OFFICES.tumling.label}: <a href={`tel:+${OFFICES.tumling.phone}`} className="inline-flex min-h-[44px] items-center hover:text-rust-400">+91 7063727464</a></li>
+            <li>{OFFICES.kathmandu.label}: <a href={`tel:+${OFFICES.kathmandu.phone}`} className="inline-flex min-h-[44px] items-center hover:text-rust-400">+977 9823808506</a></li>
           </ul>
         </div>
         <div>

@@ -87,9 +87,9 @@ export default async function PackageDetailPage({
           <div>
             <div className="eyebrow">Price</div>
             <div className="mt-1 font-display text-lg text-rust-600">{price.main}</div>
-            {price.note && <div className="text-xs text-forest-700/60">{price.note}</div>}
+            {price.note && <div className="text-xs text-forest-700/80">{price.note}</div>}
           </div>
-          <Link href={`/book/${pkg.slug}`} className="btn-primary ml-auto">
+          <Link href={`/book/${pkg.slug}`} className="btn-primary ml-auto max-sm:w-full">
             Book Inquiry
           </Link>
         </div>

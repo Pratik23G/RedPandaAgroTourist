@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -13,6 +13,22 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const close = useCallback(() => setOpenIndex(null), []);
+  const touchStartX = useRef<number | null>(null);
+
+  const step = useCallback(
+    (dir: 1 | -1) => setOpenIndex((i) => (i === null ? i : (i + dir + items.length) % items.length)),
+    [items.length],
+  );
+
+  // Lock page scroll behind the viewer
+  useEffect(() => {
+    if (openIndex === null) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [openIndex === null]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (openIndex === null) return;
@@ -49,7 +65,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               loading="lazy"
             />
-            <span className="absolute inset-x-0 bottom-0 translate-y-full bg-gradient-to-t from-forest-900/90 to-transparent p-4 pt-10 text-sm font-medium text-cream-50 transition-transform duration-300 group-hover:translate-y-0 group-focus-visible:translate-y-0">
+            <span className="absolute inset-x-0 bottom-0 translate-y-full [@media(hover:none)]:translate-y-0 bg-gradient-to-t from-forest-900/90 to-transparent p-4 pt-10 text-sm font-medium text-cream-50 transition-transform duration-300 group-hover:translate-y-0 group-focus-visible:translate-y-0">
               {item.alt}
             </span>
           </button>
@@ -61,14 +77,24 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
           role="dialog"
           aria-modal="true"
           aria-label={items[openIndex].alt}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-forest-900/95 p-4"
+          className="fixed inset-0 z-[60] flex touch-pan-y flex-col items-center justify-center bg-forest-900/95 p-4"
           onClick={close}
+          onTouchStart={(e) => {
+            touchStartX.current = e.touches[0]?.clientX ?? null;
+          }}
+          onTouchEnd={(e) => {
+            if (touchStartX.current === null) return;
+            const endX = e.changedTouches[0]?.clientX;
+            const dx = endX === undefined ? 0 : endX - touchStartX.current;
+            touchStartX.current = null;
+            if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+          }}
         >
           <button
             type="button"
             onClick={close}
             aria-label="Close photo viewer"
-            className="tap-target absolute right-4 top-4 z-10 rounded-full bg-cream-50/90 px-4 text-forest-800"
+            className="tap-target absolute right-4 top-[max(1rem,env(safe-area-inset-top))] z-10 rounded-full bg-cream-50/90 px-4 text-forest-800"
           >
             Close ✕
           </button>
@@ -79,20 +105,22 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
               aria-label={dir === "prev" ? "Previous photo" : "Next photo"}
               onClick={(e) => {
                 e.stopPropagation();
-                setOpenIndex((i) => (i === null ? i : (i + (dir === "next" ? 1 : -1) + items.length) % items.length));
+                step(dir === "next" ? 1 : -1);
               }}
               className={cn(
-                "tap-target absolute top-1/2 z-10 h-11 w-11 -translate-y-1/2 rounded-full bg-cream-50/90 text-forest-800",
+                "tap-target absolute top-1/2 z-10 h-12 w-12 -translate-y-1/2 rounded-full bg-cream-50/90 text-2xl text-forest-800",
                 dir === "prev" ? "left-3" : "right-3",
               )}
             >
               {dir === "prev" ? "‹" : "›"}
             </button>
           ))}
-          <div className="relative h-[75vh] w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+          <div className="relative h-[75dvh] w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
             <Image src={items[openIndex].src} alt={items[openIndex].alt} fill sizes="100vw" className="object-contain" />
           </div>
-          <p className="mt-3 text-center text-sm text-cream-100/90">{items[openIndex].alt}</p>
+          <p className="mt-3 pb-[env(safe-area-inset-bottom)] text-center text-sm text-cream-100/90">
+            {openIndex + 1} / {items.length} · {items[openIndex].alt}
+          </p>
         </div>
       )}
     </>
