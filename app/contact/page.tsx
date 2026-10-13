@@ -21,11 +21,11 @@ export default function ContactPage() {
           <dl className="mt-3 space-y-3 text-forest-700/90">
             <div>
               <dt className="font-semibold text-forest-800">{OFFICES.tumling.label}</dt>
-              <dd>+91 7063727464</dd>
+              <dd><a href={`tel:+${OFFICES.tumling.phone}`} className="tap-target -ml-1 px-1 hover:text-rust-600">+91 7063727464</a></dd>
             </div>
             <div>
               <dt className="font-semibold text-forest-800">{OFFICES.kathmandu.label}</dt>
-              <dd>+977 9823808506</dd>
+              <dd><a href={`tel:+${OFFICES.kathmandu.phone}`} className="tap-target -ml-1 px-1 hover:text-rust-600">+977 9823808506</a></dd>
             </div>
           </dl>
 

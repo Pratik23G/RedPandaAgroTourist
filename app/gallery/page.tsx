@@ -33,7 +33,7 @@ export default function GalleryPage() {
         <LightboxGallery items={items.map((p) => ({ src: p.src, alt: p.alt }))} />
       </div>
 
-      <details className="mt-12 text-sm text-forest-700/70">
+      <details className="mt-12 text-sm text-forest-700/85">
         <summary className="cursor-pointer font-semibold text-forest-800">Photo credits</summary>
         <ul className="mt-3 space-y-1">
           {credited.map((p) => (

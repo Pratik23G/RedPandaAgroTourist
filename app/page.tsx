@@ -49,7 +49,7 @@ export default async function HomePage() {
         <div className="mt-8 grid gap-x-8 gap-y-10 sm:grid-cols-2">
           {USPS.map((usp, i) => (
             <Reveal key={usp.title} delay={i * 90} className="flex gap-5 border-t border-forest-700/15 pt-5">
-              <span className="font-display text-3xl text-cream-200/80" aria-hidden>
+              <span className="font-display text-3xl text-rust-500/60" aria-hidden>
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div>
@@ -96,7 +96,7 @@ export default async function HomePage() {
           {testimonials.map((t, i) => (
             <blockquote key={i} className="border-l-2 border-rust-500 py-1 pl-6">
               <p className="font-display text-xl leading-snug text-forest-900">&ldquo;{t.quote}&rdquo;</p>
-              <footer className="mt-3 text-sm text-forest-700/70">
+              <footer className="mt-3 text-sm text-forest-700/85">
                 — {t.authorName}, {t.country}
               </footer>
             </blockquote>

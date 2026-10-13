@@ -82,7 +82,7 @@ export default async function PackagesPage({
           ))}
         </div>
 
-        <p className="mt-8 text-xs text-forest-700/60">
+        <p className="mt-8 text-xs text-forest-700/80">
           Showing {CURRENCY_LABELS[display.currency]}.{" "}
           {snapshot.live
             ? `Converted at live rates${snapshot.updatedAt ? ` (updated ${new Date(snapshot.updatedAt).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })})` : ""}`
