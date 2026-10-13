@@ -14,6 +14,18 @@
   body {
     overflow-x: clip; /* not hidden: hidden makes body a scroll container and breaks position: sticky */
   }
+  /* iOS Safari zooms the page on focus when a field's font-size is under 16px */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
   h1,
   h2,
   h3 {
@@ -50,12 +62,56 @@
     background-size: 2.25rem 1.75rem;
   }
 
+  /* Desktop nav: colour shift + rust underline that grows from the left on hover/focus/touch */
+  .nav-link {
+    @apply relative text-forest-700 transition-all duration-200 hover:-translate-y-0.5 hover:text-rust-600 focus-visible:text-rust-600 active:scale-95;
+  }
+  .nav-link::after {
+    content: "";
+    @apply absolute inset-x-0 bottom-1.5 h-0.5 origin-left scale-x-0 rounded-full bg-rust-500 transition-transform duration-300 ease-out;
+  }
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    @apply scale-x-100;
+  }
+
+  /* Hamburger panel: links slide in one by one; press/hover tints row and nudges text */
+  .mobile-nav-link {
+    @apply flex min-h-[52px] items-center rounded-sm border-b border-forest-900/10 border-l-4 border-l-transparent px-2 text-base font-semibold uppercase tracking-wide text-forest-800 transition-all duration-200 hover:border-l-rust-500 hover:bg-rust-500/10 hover:pl-4 hover:text-rust-600 focus-visible:border-l-rust-500 focus-visible:bg-rust-500/10 focus-visible:text-rust-600 active:border-l-rust-500 active:bg-rust-500/15 active:pl-4 active:text-rust-600;
+    animation: nav-item-in 0.35s ease-out both;
+  }
+  .menu-panel {
+    animation: menu-drop 0.25s ease-out both;
+  }
+
   .animate-flag-sway {
     animation: flag-sway 2.6s ease-in-out infinite;
   }
 
   .animate-float {
     animation: gentle-float 3.5s ease-in-out infinite;
+  }
+}
+
+@keyframes nav-item-in {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes menu-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -81,7 +137,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .animate-flag-sway,
-  .animate-float {
+  .animate-float,
+  .mobile-nav-link,
+  .menu-panel {
     animation: none;
   }
 }

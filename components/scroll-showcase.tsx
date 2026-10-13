@@ -162,7 +162,7 @@ export function HorizontalScenes() {
   return (
     // Tall wrapper = scroll distance; the inner pane stays pinned while we translate the strip.
     <section ref={outer} className="relative h-[320vh] bg-cream-100 motion-reduce:h-auto" aria-labelledby="scenes-heading">
-      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden pt-20 motion-reduce:static motion-reduce:h-auto motion-reduce:py-16">
+      <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden pt-20 motion-reduce:static motion-reduce:h-auto motion-reduce:py-16">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-8">
           <span className="eyebrow">
             <span aria-hidden className="h-px w-6 bg-rust-500" />

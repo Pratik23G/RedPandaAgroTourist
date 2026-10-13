@@ -4,6 +4,8 @@ import { OriginSelector } from "@/components/origin-selector";
 import { getVisitorOrigin } from "@/lib/origin-cookie";
 import { CurrencySelector } from "@/components/currency-selector";
 import { getSavedCurrency } from "@/lib/display-currency";
+import { MobileNav } from "@/components/mobile-nav";
+import { HeaderShell } from "@/components/header-shell";
 
 const NAV_LINKS = [
   { href: "/packages", label: "Packages" },
@@ -18,24 +20,32 @@ export async function SiteHeader() {
   const currency = (await getSavedCurrency()) ?? (origin === "nepal" ? "NPR" : "USD");
 
   return (
-    <header className="sticky top-0 z-40 border-b border-forest-900/10 bg-cream-50/95 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-8">
-        <Link href="/" className="flex items-center gap-3 font-display text-lg font-bold tracking-tightest text-forest-900">
-          <Image src="/images/logo.png" alt="" width={56} height={56} priority className="h-12 w-12 sm:h-14 sm:w-14 drop-shadow-sm transition-transform duration-300 hover:rotate-6 hover:scale-105" />
-          <span className="leading-tight">Red Panda Agro Tourist<span className="block text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-rust-600">Tours &amp; Travel Pvt. Ltd.</span></span>
+    <HeaderShell>
+      <div className="relative mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-2 sm:px-8 xl:py-4">
+        <Link href="/" className="flex min-w-0 items-center gap-2 font-display text-base font-bold tracking-tightest text-forest-900 sm:gap-3 sm:text-lg">
+          <Image src="/images/logo.png" alt="" width={56} height={56} priority className="h-10 w-10 shrink-0 sm:h-14 sm:w-14 drop-shadow-sm transition-transform duration-300 hover:rotate-6 hover:scale-105" />
+          <span className="min-w-0 leading-tight">Red Panda Agro Tourist<span className="block truncate text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-rust-600 sm:text-[0.65rem] sm:tracking-[0.18em]">Tours &amp; Travel Pvt. Ltd.</span></span>
         </Link>
-        <nav aria-label="Main navigation" className="flex flex-wrap items-center gap-5 text-sm font-semibold uppercase tracking-wide">
+
+        {/* Desktop: full nav + selectors */}
+        <nav aria-label="Main navigation" className="hidden items-center gap-6 text-sm font-semibold uppercase tracking-wide xl:flex">
           {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="tap-target text-forest-700 hover:text-rust-600">
+            <Link key={link.href} href={link.href} className="nav-link tap-target">
               {link.label}
             </Link>
           ))}
         </nav>
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="hidden items-center gap-4 xl:flex">
           <OriginSelector initialOrigin={origin} />
           <CurrencySelector key={currency} current={currency} />
         </div>
+
+        {/* Mobile / tablet: hamburger panel */}
+        <MobileNav links={NAV_LINKS}>
+          <OriginSelector initialOrigin={origin} stacked />
+          <CurrencySelector key={currency} current={currency} stacked />
+        </MobileNav>
       </div>
-    </header>
+    </HeaderShell>
   );
 }

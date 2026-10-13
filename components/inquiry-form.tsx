@@ -139,10 +139,11 @@ export function InquiryForm({ packageSlug }: { packageSlug?: string }) {
 
       <fieldset>
         <legend className="text-sm font-medium text-forest-800">Send to</legend>
-        <div className="mt-1 flex gap-4 text-sm">
+        <div className="mt-1 flex flex-wrap gap-x-6 text-sm">
           {(Object.keys(OFFICES) as (keyof typeof OFFICES)[]).map((key) => (
-            <label key={key} className="flex items-center gap-2">
+            <label key={key} className="flex min-h-[44px] items-center gap-2">
               <input
+                className="h-5 w-5 accent-rust-500"
                 type="radio"
                 name="office"
                 checked={office === key}
