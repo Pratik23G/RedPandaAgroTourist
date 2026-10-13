@@ -34,7 +34,7 @@ export function MobileNav({ links, children }: MobileNavProps) {
   }, [open]);
 
   return (
-    <div className="xl:hidden">
+    <div className="md:hidden">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
