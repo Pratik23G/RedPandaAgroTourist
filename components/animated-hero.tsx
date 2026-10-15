@@ -28,8 +28,8 @@ export function AnimatedHero() {
 
       <div className="relative z-10 flex min-h-[70svh] w-full items-end px-4 pb-20 pt-28 sm:min-h-[85svh] sm:px-8 lg:px-16">
         <div className="max-w-2xl">
-          <span className="eyebrow text-gold-400">
-            <span aria-hidden className="h-px w-6 bg-gold-400" />
+          <span className="eyebrow text-sm text-[#FFE27A] [text-shadow:0_1px_8px_rgba(13,29,21,0.8),0_0_2px_rgba(13,29,21,0.6)] sm:text-base">
+            <span aria-hidden className="h-0.5 w-7 bg-[#FFE27A]" />
             Tumling &middot; Singhalila &middot; Eastern Himalayas
           </span>
           <h1 className="mt-5 font-display text-4xl font-bold leading-[1] min-[400px]:text-5xl sm:text-6xl lg:text-7xl">
