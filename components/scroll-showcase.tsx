@@ -56,8 +56,8 @@ function Photo({ k, sizes, className, priority }: { k: PhotoKey; sizes: string; 
 const FLOATERS: { k: PhotoKey; pos: string; rot: string; speed: number; size: string; label: string }[] = [
   { k: "red-panda-cub", pos: "left-[2%] top-[6%] sm:left-[6%]", rot: "-rotate-3", speed: -0.12, size: "w-32 sm:w-44 lg:w-56", label: "Cubs learn to climb by spring" },
   { k: "kanchenjunga-tumling", pos: "right-[2%] top-[2%] sm:right-[5%]", rot: "rotate-2", speed: -0.2, size: "w-36 sm:w-52 lg:w-64", label: "Kanchenjunga from Tumling" },
-  { k: "rhododendron", pos: "left-[4%] bottom-[8%] sm:left-[9%]", rot: "rotate-2", speed: 0.1, size: "w-32 sm:w-44 lg:w-52", label: "Rhododendron forest" },
-  { k: "owl", pos: "right-[3%] bottom-[6%] sm:right-[8%]", rot: "-rotate-2", speed: 0.16, size: "w-28 sm:w-40 lg:w-48", label: "Himalayan wood owl" },
+  { k: "rhododendron", pos: "left-[4%] bottom-[2%] sm:left-[9%]", rot: "rotate-2", speed: 0.05, size: "w-32 sm:w-44 lg:w-52", label: "Rhododendron forest" },
+  { k: "owl", pos: "right-[3%] bottom-[0%] sm:right-[8%]", rot: "-rotate-2", speed: 0.07, size: "w-28 sm:w-40 lg:w-48", label: "Himalayan wood owl" },
 ];
 
 export function PandaParallax() {
@@ -74,7 +74,9 @@ export function PandaParallax() {
 
   return (
     <section className="relative overflow-hidden bg-forest-900 py-24 text-cream-50 sm:py-32" aria-labelledby="panda-heading">
-      <div className="relative mx-auto flex min-h-[640px] max-w-6xl flex-col items-center justify-center px-4 sm:min-h-[780px] sm:px-8">
+      <div className="relative mx-auto flex max-w-6xl flex-col items-center px-4 sm:px-8">
+        {/* Stage: portrait + floating photos live here so they can never drift into the text block below. */}
+        <div className="relative flex w-full justify-center pb-24 pt-8 sm:pb-32">
         {/* floating photo cards */}
         {FLOATERS.map((f) => (
           <Drift key={f.k} speed={f.speed} className={cn("absolute z-20", f.pos)}>
@@ -101,8 +103,9 @@ export function PandaParallax() {
             <Photo k="red-panda-langtang" sizes="(min-width: 640px) 400px, 60vw" />
           </div>
         </div>
+        </div>
 
-        <div className="relative z-30 mt-10 max-w-xl text-center">
+        <div className="relative z-30 mt-4 max-w-xl text-center">
           <span className="eyebrow text-gold-400">
             <span aria-hidden className="h-px w-6 bg-gold-400" />
             Meet the locals
