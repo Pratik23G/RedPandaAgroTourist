@@ -2,10 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
 import { PrayerFlags } from "@/components/prayer-flags";
+import { AmbientVideo } from "@/components/ambient-video";
+
+/** Crossfade start (seconds) of each scene in hero-scenery.mp4: sky/Kanchenjunga, sunrise cloud sea, pine valley, golden ridge. */
+const SCENE_STARTS = [0, 5.4, 12.4, 19.4];
 
 export function AnimatedHero() {
   return (
-    <section className="relative min-h-[70svh] overflow-hidden bg-forest-900 text-cream-50 sm:min-h-[85svh]">
+    <section data-scene="0" className="hero-scenes relative min-h-[70svh] overflow-hidden bg-forest-900 text-cream-50 sm:min-h-[85svh]">
       <Image
         src="/images/tumling-road.jpg"
         alt="The winding road up to the misty hillside village at Tumling"
@@ -15,7 +19,10 @@ export function AnimatedHero() {
         className="object-cover"
       />
 
-      {/* Bottom-left scrim only, for headline contrast — never a full-image fog. */}
+      {/* Calm looping Himalayan time-lapse fades in over the photo once it can play (photo stays as fallback). */}
+      <AmbientVideo src="/videos/hero-scenery.mp4" sceneStarts={SCENE_STARTS} className="absolute inset-0 h-full w-full object-cover" />
+
+      {/* Bottom-left scrim only, for headline contrast. */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
@@ -28,14 +35,14 @@ export function AnimatedHero() {
 
       <div className="relative z-10 flex min-h-[70svh] w-full items-end px-4 pb-20 pt-28 sm:min-h-[85svh] sm:px-8 lg:px-16">
         <div className="max-w-2xl">
-          <span className="eyebrow text-sm text-[#FFE27A] [text-shadow:0_1px_8px_rgba(13,29,21,0.8),0_0_2px_rgba(13,29,21,0.6)] sm:text-base">
-            <span aria-hidden className="h-0.5 w-7 bg-[#FFE27A]" />
+          <span className="eyebrow hero-accent text-sm [text-shadow:0_1px_8px_rgba(13,29,21,0.8),0_0_2px_rgba(13,29,21,0.6)] sm:text-base">
+            <span aria-hidden className="hero-accent-bg h-0.5 w-7" />
             Tumling &middot; Singhalila &middot; Eastern Himalayas
           </span>
-          <h1 className="mt-5 font-display text-4xl font-bold leading-[1] min-[400px]:text-5xl sm:text-6xl lg:text-7xl">
+          <h1 className="hero-ink mt-5 font-display text-4xl font-bold leading-[1] [text-shadow:0_2px_14px_rgba(13,29,21,0.45)] min-[400px]:text-5xl sm:text-6xl lg:text-7xl">
             Track wild red pandas where the clouds live.
           </h1>
-          <p className="mt-6 max-w-lg text-base text-cream-100/85 sm:text-lg">
+          <p className="hero-ink-soft mt-6 max-w-lg text-base [text-shadow:0_1px_10px_rgba(13,29,21,0.55)] sm:text-lg">
             Guided tracking, bird watching, cultural village tours, and farm-family homestays — with
             Kanchenjunga and Everest views along the way.
           </p>

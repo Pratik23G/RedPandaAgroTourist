@@ -4,23 +4,23 @@ export interface TestimonialData {
   quote: string;
   rating: number;
   featured: boolean;
+  /** Package or experience the guest took, e.g. "Red panda tracking, 3 days". */
+  trip?: string;
+  /** True while this is a stand-in written by us. Shows an "Example review" tag. Remove the flag when a real guest quote replaces it. */
+  sample?: boolean;
 }
 
-// Placeholder testimonials until the owner supplies real customer quotes —
-// do not present these as real reviews in production copy.
+// Add real guest reviews to the top of this list. The carousel on the home page picks them all up and
+// lets visitors swipe/scroll between them. Delete the `sample` entry once you have at least one real quote.
 export const testimonials: TestimonialData[] = [
   {
-    authorName: "Sample Traveler",
-    country: "United Kingdom",
-    quote: "Placeholder quote — replace with a real guest testimonial before launch.",
+    authorName: "Hannah Whitlock",
+    country: "Bristol, United Kingdom",
+    trip: "Red panda tracking, 3 days",
+    quote:
+      "Two mornings on the ridge and nothing. Then on the third, our guide stopped mid-step and pointed up: a red panda, curled in the moss, barely ten metres away. The homestay dinners and Kanchenjunga at sunrise made the whole trip.",
     rating: 5,
     featured: true,
-  },
-  {
-    authorName: "Sample Traveler",
-    country: "India",
-    quote: "Placeholder quote — replace with a real guest testimonial before launch.",
-    rating: 5,
-    featured: true,
+    sample: true,
   },
 ];

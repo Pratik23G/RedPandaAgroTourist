@@ -37,6 +37,11 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
+      <p className="mx-auto max-w-4xl px-4 pb-3 text-center text-xs leading-relaxed text-cream-100/60">
+        Hero scenery footage from Wikimedia Commons: &ldquo;Khanchendzonga from Jorebunglow, Darjeeling&rdquo; (CC BY-SA 4.0);
+        &ldquo;Into the mist, above the clouds towards Kaffer, Kalimpong from Siliguri&rdquo; (CC BY-SA 4.0);
+        &ldquo;The Himalayan&rdquo; by Amit Haware (CC BY 3.0). Cropped and edited.
+      </p>
       <div className="border-t border-cream-100/10 px-4 py-4 text-center text-xs text-cream-100/60">
         © {new Date().getFullYear()} Red Panda Agro Tourist Tours & Travel Pvt. Ltd. All rights reserved.
       </div>

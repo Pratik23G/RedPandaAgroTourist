@@ -7,6 +7,25 @@ import { WhatsAppCta } from "@/components/whatsapp-cta";
 import { AnimatedHero } from "@/components/animated-hero";
 import { PandaParallax, HorizontalScenes } from "@/components/scroll-showcase";
 import { Reveal } from "@/components/reveal";
+import { PawPrint } from "@/components/paw-print";
+import { TestimonialCarousel } from "@/components/testimonial-carousel";
+import { PandaReel, type ReelClip } from "@/components/panda-video";
+
+const REEL_CLIPS: ReelClip[] = [
+  { src: "/videos/red-panda.mp4", poster: "/videos/red-panda.jpg", caption: "Up in the branches", portrait: true },
+  {
+    src: "/videos/red-panda-2.mp4",
+    poster: "/videos/red-panda-2.jpg",
+    caption: "Settling in for a nap",
+    credit: "Clip 2: Ailurus fulgens, MatthiasKabel, CC BY-SA 3.0 (Wikimedia Commons). Filmed in captivity.",
+  },
+  {
+    src: "/videos/red-panda-3.mp4",
+    poster: "/videos/red-panda-3.jpg",
+    caption: "Foraging on the ground",
+    credit: "Clip 3: NaIzletuSi, CC BY 3.0 (Wikimedia Commons). Filmed in captivity.",
+  },
+];
 
 const USPS = [
   {
@@ -35,10 +54,28 @@ export default async function HomePage() {
     <>
       <AnimatedHero />
 
-      <section className="bg-cream-100 py-6 text-center">
-        <span className="tap-target inline-flex rounded-sm border border-rust-500 bg-rust-500/10 px-4 text-sm font-semibold text-rust-600">
-          No red panda sighted in 2–3 days? The package is free.
-        </span>
+      <section className="bg-cream-100 px-4 py-10 sm:py-14">
+        <Reveal className="mx-auto flex max-w-3xl flex-col items-center gap-5 text-center sm:flex-row sm:text-left">
+          {/* hand-stamped look: tilted, dashed ink border, paw seal */}
+          <div className="relative shrink-0 -rotate-6" aria-hidden>
+            <div className="flex h-24 w-24 flex-col items-center justify-center rounded-full border-2 border-dashed border-rust-600 bg-cream-50 text-rust-600 shadow-sm sm:h-28 sm:w-28">
+              <PawPrint className="h-8 w-8 animate-float sm:h-9 sm:w-9" />
+              <span className="mt-1 font-display text-xs font-bold uppercase leading-tight tracking-wider">
+                Our
+                <br />
+                promise
+              </span>
+            </div>
+          </div>
+          <div>
+            <p className="font-display text-3xl font-bold leading-tight text-forest-900 sm:text-4xl">
+              No red panda? <span className="text-rust-600">No charge.</span>
+            </p>
+            <p className="mt-2 text-base text-forest-800 sm:text-lg">
+              If we can&apos;t find one for you in 2&ndash;3 days on the trail, the package is on us. That&apos;s how sure our guides are.
+            </p>
+          </div>
+        </Reveal>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-8">
@@ -59,6 +96,21 @@ export default async function HomePage() {
             </Reveal>
           ))}
         </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-4 pb-20 sm:px-8" aria-labelledby="video-heading">
+        <Reveal>
+          <span className="eyebrow">
+            <span aria-hidden className="h-px w-6 bg-rust-500" />
+            In the wild
+          </span>
+          <h2 id="video-heading" className="mt-2 font-display text-3xl font-bold text-forest-900 sm:text-4xl">
+            This is what you came to see.
+          </h2>
+          <div className="mt-6">
+            <PandaReel clips={REEL_CLIPS} />
+          </div>
+        </Reveal>
       </section>
 
       <PandaParallax />
@@ -90,17 +142,10 @@ export default async function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-8">
         <span className="eyebrow">
           <span aria-hidden className="h-px w-6 bg-rust-500" />
-          What travelers say
+          What guests say
         </span>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2">
-          {testimonials.map((t, i) => (
-            <blockquote key={i} className="border-l-2 border-rust-500 py-1 pl-6">
-              <p className="font-display text-xl leading-snug text-forest-900">&ldquo;{t.quote}&rdquo;</p>
-              <footer className="mt-3 text-sm text-forest-700/85">
-                — {t.authorName}, {t.country}
-              </footer>
-            </blockquote>
-          ))}
+        <div className="mt-8">
+          <TestimonialCarousel items={testimonials} />
         </div>
       </section>
 
