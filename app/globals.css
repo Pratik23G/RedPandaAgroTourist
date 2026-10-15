@@ -94,6 +94,55 @@
     animation: menu-drop 0.25s ease-out both;
   }
 
+  .reel-slide {
+    animation-duration: 0.45s;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-fill-mode: both;
+  }
+
+  /*
+   * Hero text follows the scenery. data-scene on .hero-scenes is set from the video's playback time; every colour
+   * fades over 1s, the same length as the crossfade between scenes in hero-scenery.mp4, starting as it starts.
+   */
+  .hero-scenes {
+    --hero-accent: #ffe27a;
+    --hero-ink: #fbf8f1;
+    --hero-ink-soft: rgba(243, 232, 212, 0.9);
+  }
+  .hero-scenes[data-scene="1"] {
+    --hero-accent: #ffc9a0;
+    --hero-ink: #fff7ec;
+    --hero-ink-soft: rgba(255, 240, 222, 0.92);
+  }
+  .hero-scenes[data-scene="2"] {
+    --hero-accent: #b6f5a8;
+    --hero-ink: #f6fff1;
+    --hero-ink-soft: rgba(230, 250, 222, 0.92);
+  }
+  .hero-scenes[data-scene="3"] {
+    --hero-accent: #ffd36b;
+    --hero-ink: #ffffff;
+    --hero-ink-soft: rgba(255, 246, 220, 0.94);
+  }
+  .hero-accent,
+  .hero-ink,
+  .hero-ink-soft,
+  .hero-accent-bg {
+    transition: color 1s ease-in-out, background-color 1s ease-in-out;
+  }
+  .hero-accent {
+    color: var(--hero-accent);
+  }
+  .hero-accent-bg {
+    background-color: var(--hero-accent);
+  }
+  .hero-ink {
+    color: var(--hero-ink);
+  }
+  .hero-ink-soft {
+    color: var(--hero-ink-soft);
+  }
+
   .animate-flag-sway {
     animation: flag-sway 2.6s ease-in-out infinite;
   }
@@ -111,6 +160,28 @@
   100% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(1.3) rotate(var(--r, 0deg));
+  }
+}
+
+@keyframes reel-in-next {
+  from {
+    opacity: 0;
+    transform: translateX(14%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes reel-in-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-14%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
   }
 }
 
@@ -160,7 +231,8 @@
   .animate-flag-sway,
   .animate-float,
   .mobile-nav-link,
-  .menu-panel {
+  .menu-panel,
+  .reel-slide {
     animation: none;
   }
 }
